@@ -1,0 +1,35 @@
+@charset "UTF-8";
+body {
+	margin:0;
+}
+header {
+	height:15vh;
+	background-color:lightgray;
+}
+h1 {
+	margin:0;
+	text-align:center;
+}
+h2 {
+	margin:0;
+}
+section {
+	height:70vh;
+	background: #abbaab;
+	background: -webkit-linear-gradient(to right, #abbaab, #ffffff);
+	background: linear-gradient(to right, #abbaab, #ffffff);
+}
+p#id{
+	margin:0;
+}
+footer {
+	height:13vh;
+	background-color:black;
+	color:white;
+	text-align:center;
+}
+.loginArea{
+	position:absolute;
+	right:10px;
+	top:10px;
+}
