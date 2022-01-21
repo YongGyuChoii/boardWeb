@@ -2,41 +2,41 @@ package boardWeb.util;
 
 public class PagingUtil {
 
-	private int nowPage; // ÇöÀçÆäÀÌÁö
-	private int startPage; //½ÃÀÛÆäÀÌÁö (½ÃÀÛ¹øÈ£)
-	private int endPage; //È­¸é¿¡¼­ ³¡ ÆäÀÌÁö¹øÈ£  
-	private int total; //°Ô½Ã±Û ÃÑ°¹¼ö    (ÀüÃ¼ °¹¼ö)
-	private int perPage; //È­¸é´ç ±Û°¹¼ö    (ÇÑÆäÀÌÁö¿¡¼­ º¸¿©Áö´Â °³¼ö)
-	private int lastPage; //ÃÖÁ¾ÆäÀÌÁö			(Á¦ÀÏ ³¡¿¡ÀÖ´Â ÆäÀÌÁö)
-	private int start; //Äõ¸®¿¡¼­ »ç¿ëÇÒ È­¸é´ç ±Û ½ÃÀÛ¹øÈ£  (rownum ½ÃÀÛ¹øÈ£)
-	private int end; // Äõ¸®¿¡¼­ »ç¿ëÇÒ È­¸é´ç ±Û Á¾·á¹øÈ£    (rownum ³¡¹øÈ£)
-	private int cntPage=5; //È­¸é¿¡¼­ º¸¿©Áú ÆäÀÌÂ¡ °¹¼ö
+	private int nowPage; // í˜„ìž¬íŽ˜ì´ì§€
+	private int startPage; //ì‹œìž‘íŽ˜ì´ì§€ (ì‹œìž‘ë²ˆí˜¸)
+	private int endPage; //í™”ë©´ì—ì„œ ë íŽ˜ì´ì§€ë²ˆí˜¸  
+	private int total; //ê²Œì‹œê¸€ ì´ê°¯ìˆ˜    (ì „ì²´ ê°¯ìˆ˜)
+	private int perPage; //í™”ë©´ë‹¹ ê¸€ê°¯ìˆ˜    (í•œíŽ˜ì´ì§€ì—ì„œ ë³´ì—¬ì§€ëŠ” ê°œìˆ˜)
+	private int lastPage; //ìµœì¢…íŽ˜ì´ì§€			(ì œì¼ ëì—ìžˆëŠ” íŽ˜ì´ì§€)
+	private int start; //ì¿¼ë¦¬ì—ì„œ ì‚¬ìš©í•  í™”ë©´ë‹¹ ê¸€ ì‹œìž‘ë²ˆí˜¸  (rownum ì‹œìž‘ë²ˆí˜¸)
+	private int end; // ì¿¼ë¦¬ì—ì„œ ì‚¬ìš©í•  í™”ë©´ë‹¹ ê¸€ ì¢…ë£Œë²ˆí˜¸    (rownum ëë²ˆí˜¸)
+	private int cntPage=5; //í™”ë©´ì—ì„œ ë³´ì—¬ì§ˆ íŽ˜ì´ì§• ê°¯ìˆ˜
 	
 	public PagingUtil() {
 		
 	}
 	
 	public PagingUtil(int total,int nowPage, int perPage) {
-		//ÇöÀçÆäÀÌÁö,°Ô½Ã±Û °¹¼ö,È­¸é´ç °Ô½Ã±Û °¹¼ö ÃÊ±âÈ­
+		//í˜„ìž¬íŽ˜ì´ì§€,ê²Œì‹œê¸€ ê°¯ìˆ˜,í™”ë©´ë‹¹ ê²Œì‹œê¸€ ê°¯ìˆ˜ ì´ˆê¸°í™”
 		setNowPage(nowPage);
 		setPerPage(perPage);
 		setTotal(total);
 		
-		//ÀüÃ¼ÀÇ ÃÖÁ¾ ÆäÀÌÁö¹øÈ£ °è»ê lastpage °è»ê
+		//ì „ì²´ì˜ ìµœì¢… íŽ˜ì´ì§€ë²ˆí˜¸ ê³„ì‚° lastpage ê³„ì‚°
 		calcLastPage(total,perPage);
 		
-		//ÇÑ È­¸é¿¡¼­ º¸¿©Áú ½ÃÀÛ ÆäÀÌÁö¿Í Á¾·á ÆäÀÌÁö ±¸ÇÏ±â
+		//í•œ í™”ë©´ì—ì„œ ë³´ì—¬ì§ˆ ì‹œìž‘ íŽ˜ì´ì§€ì™€ ì¢…ë£Œ íŽ˜ì´ì§€ êµ¬í•˜ê¸°
 		calcStartEndPage(nowPage,cntPage);
 		
-		//Äõ¸®¿¡¼­ »ç¿ëÇÒ ±Û ½ÃÀÛ ¹øÈ£¿Í Á¾·á ¹øÈ£ ±¸ÇÏ±â
+		//ì¿¼ë¦¬ì—ì„œ ì‚¬ìš©í•  ê¸€ ì‹œìž‘ ë²ˆí˜¸ì™€ ì¢…ë£Œ ë²ˆí˜¸ êµ¬í•˜ê¸°
 		
 		calcStartEnd(nowPage,perPage);
 	}
 	
 	public void calcStartEnd(int nowPage,int perPage) {
-		//ÇÑ È­¸éÀÇ °Ô½Ã±Û Á¾·á ¹øÈ£
+		//í•œ í™”ë©´ì˜ ê²Œì‹œê¸€ ì¢…ë£Œ ë²ˆí˜¸
 		int end = nowPage*perPage;
-		//ÇÑ È­¸éÀÇ °Ô½Ã±Û ½ÃÀÛ ¹øÈ£ 
+		//í•œ í™”ë©´ì˜ ê²Œì‹œê¸€ ì‹œìž‘ ë²ˆí˜¸ 
 		int start = end-perPage+1;
 		
 		setEnd(end);
@@ -45,19 +45,19 @@ public class PagingUtil {
 	}
 	
 	public void calcStartEndPage(int nowPage, int cntPage) {
-		//ÇÑ È­¸é¿¡¼­ º¸¿©Áö´Â ¸¶Áö¸· ÆäÀÌÁö °è»ê
+		//í•œ í™”ë©´ì—ì„œ ë³´ì—¬ì§€ëŠ” ë§ˆì§€ë§‰ íŽ˜ì´ì§€ ê³„ì‚°
 		int endPage = (((int)Math.ceil((double)nowPage/cntPage))*cntPage);
 		
-		// ÃÖÁ¾ ÆäÀÌÁö°¡ endPageº¸´Ù ÀÛÀº °æ¿ì endpage¸¦ ÃÖÁ¾ ÆäÀÌÁö·Î
-		// ÃÖÁ¾ ÆäÀÌÁö´Â ->23 ÀÏ¶§ °è»êµÈ ³¡ÆäÀÌÁö´Â 30À¸·Î °è»ê µÇ¹Ç·Î
-		// ³¡ ÆäÀÌÁö¸¦ ÃÖÁ¾ ÆäÀÌÁö·Î º¯°æ
+		// ìµœì¢… íŽ˜ì´ì§€ê°€ endPageë³´ë‹¤ ìž‘ì€ ê²½ìš° endpageë¥¼ ìµœì¢… íŽ˜ì´ì§€ë¡œ
+		// ìµœì¢… íŽ˜ì´ì§€ëŠ” ->23 ì¼ë•Œ ê³„ì‚°ëœ ëíŽ˜ì´ì§€ëŠ” 30ìœ¼ë¡œ ê³„ì‚° ë˜ë¯€ë¡œ
+		// ë íŽ˜ì´ì§€ë¥¼ ìµœì¢… íŽ˜ì´ì§€ë¡œ ë³€ê²½
 		if(getLastPage()<endPage) {
 			setEndPage(getLastPage());
 		}else {
 			setEndPage(endPage);
 		}
 		
-		//½ÃÀÛ ÆäÀÌÁö °è»êÇÏ±â
+		//ì‹œìž‘ íŽ˜ì´ì§€ ê³„ì‚°í•˜ê¸°
 		int startPage = (endPage-cntPage+1);
 		
 		if(startPage<1) {
@@ -67,7 +67,7 @@ public class PagingUtil {
 	}
 	
 	public void calcLastPage(int total,int perPage) {
-		//(Á¤¼ö)¼Ò¼öÁ¡ ¿Ã¸²(ÀüÃ¼ °Ô½Ã±Û/ÇÑ ÆäÀÌÁö´ç ±Û°¹¼ö)
+		//(ì •ìˆ˜)ì†Œìˆ˜ì  ì˜¬ë¦¼(ì „ì²´ ê²Œì‹œê¸€/í•œ íŽ˜ì´ì§€ë‹¹ ê¸€ê°¯ìˆ˜)
 		int lastPage = (int)Math.ceil((double)total/perPage);
 		setLastPage(lastPage);
 		
